@@ -83,7 +83,7 @@
       </div>
 
         <div class="form-group">
-          <label for="discount" class="col-form-label">Descuento</label>
+          <label for="discount" class="col-form-label">Descuento(%)</label>
           <input id="discount" type="number" name="discount" min="0" max="100" placeholder="Ingresa Descuento"  value="0" class="form-control">
           @error('discount')
           <span class="text-danger">{{$message}}</span>
@@ -146,7 +146,7 @@
         <div class="form-group">
           <label for="status" class="col-form-label">Estado <span class="text-danger">*</span></label>
           <select name="status" class="form-control">
-              <option value="active" selected>Activa</option>
+              <option value="active" selected>Activo</option>
               <option value="inactive">Inactivo</option>
           </select>
           @error('status')

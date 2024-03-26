@@ -140,7 +140,7 @@ Route::group(['prefix'=>'/admin','middleware'=>['auth','admin']],function(){
     Route::delete('/notification/{id}','NotificationController@delete')->name('notification.delete');
     // Password Change
     Route::get('change-password', 'AdminController@changePassword')->name('change.password.form');
-    Route::post('change-password', 'AdminController@changPasswordStore')->name('change.password');
+    Route::post('change-password', 'AdminController@changPasswordStore')->name('change.admin.password');
 });
 
 
@@ -176,7 +176,7 @@ Route::group(['prefix'=>'/user','middleware'=>['user']],function(){
     
     // Password Change
     Route::get('change-password', 'HomeController@changePassword')->name('user.change.password.form');
-    Route::post('change-password', 'HomeController@changPasswordStore')->name('change.password');
+    Route::post('change-password', 'HomeController@changPasswordStore')->name('change.user.password');
 
 });
 

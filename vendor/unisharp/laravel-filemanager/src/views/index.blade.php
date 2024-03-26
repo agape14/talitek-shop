@@ -284,7 +284,7 @@
       headers: {
         'Authorization': 'Bearer ' + getUrlParam('token')
       },
-      acceptedFiles: "{{ implode(',', $helper->availableMimeTypes()) }}",
+      acceptedFiles: "{{ implode(',', $helper->availableMimeTypes()) }},image/webp",
       maxFilesize: ({{ $helper->maxUploadSize() }} / 1000)
     }
   </script>
