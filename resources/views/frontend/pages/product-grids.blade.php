@@ -176,7 +176,7 @@
                                                     @endphp
                                                     <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                                     <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                                    @if($product->discount)
+                                                    @if($product->discount>0)
                                                                 <span class="price-dec">{{$product->discount}} % Dscto</span>
                                                     @endif
                                                 </a>

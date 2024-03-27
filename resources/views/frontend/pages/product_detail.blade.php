@@ -331,7 +331,10 @@
 											@endphp
                                             <img class="default-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
                                             <img class="hover-img" src="{{$photo[0]}}" alt="{{$photo[0]}}">
-                                            <span class="price-dec">{{$data->discount}} % Dscto</span>
+											@if($data->discount>0)
+											<span class="price-dec">{{$data->discount}} % Dscto</span>
+											@endif
+                                            
                                                                     {{-- <span class="out-of-stock">Hot</span> --}}
                                         </a>
                                         <div class="button-head">
