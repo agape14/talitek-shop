@@ -34,10 +34,10 @@ Version:1.0
 window.onload = () => {
 	'use strict';
   
-	if ('serviceWorker' in navigator) {
+	/*if ('serviceWorker' in navigator) {
 	  navigator.serviceWorker
 			   .register('./sw.js');
-	}
+	}*/
   }
 (function($) {
     "use strict";
