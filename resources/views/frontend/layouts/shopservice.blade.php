@@ -5,7 +5,7 @@
             <div class="single-service">
                 <i class="ti-rocket"></i>
                 <h4>Envío gratis</h4>
-                <p>Pedidos superiores a S/. 100.00</p>
+                <p>Pedidos superiores a S/. 199.00</p>
             </div>
             <!-- End Single Service -->
         </div>
