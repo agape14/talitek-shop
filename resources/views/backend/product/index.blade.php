@@ -19,18 +19,19 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Featured</th>
-              <th>Price</th>
-              <th>Discount</th>
-              <th>Size</th>
-              <th>Condition</th>
-              <th>Brand</th>
+              <th>Titulo</th>
+              <th>Categoria</th>
+              <th>Destacado</th>
+              <th>Soles(S/.)</th>
+              <th>Dolares($)</th>
+              <th>Dscto.</th>
+              <!--<th>Size</th>-->
+              <th>Condicion</th>
+              <th>Marca</th>
               <th>Stock</th>
-              <th>Photo</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>Foto</th>
+              <th>Estado</th>
+              <th>...</th>
             </tr>
           </thead>
           <tbody>
@@ -50,9 +51,10 @@
                       </sub>
                     </td>
                     <td>{{(($product->is_featured==1)? 'Yes': 'No')}}</td>
-                    <td>${{$product->price}}</td>
+                    <td>{{number_format($product->price, 2)}}</td>
+                    <td>{{number_format($product->price_dollar, 2)}}</td>
                     <td>  {{$product->discount}}%</td>
-                    <td>{{$product->size}}</td>
+                    <!--<td>{{$product->size}}</td>-->
                     <td>{{$product->condition}}</td>
                     <td> {{ucfirst($product->brand->title)}}</td>
                     <td>

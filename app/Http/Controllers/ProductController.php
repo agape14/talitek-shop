@@ -139,7 +139,7 @@ class ProductController extends Controller
             'stock'=>"required|numeric",
             'cat_id'=>'required|exists:categories,id',
             'child_cat_id'=>'nullable|exists:categories,id',
-            'is_featured'=>'sometimes|in:1',
+            'is_featured'=>'nullable',
             'brand_id'=>'nullable|exists:brands,id',
             'status'=>'required|in:active,inactive',
             'condition'=>'required|in:default,new,hot',
@@ -149,7 +149,7 @@ class ProductController extends Controller
         ]);
 
         $data=$request->all();
-        $data['is_featured']=$request->input('is_featured',0);
+        $data['is_featured'] = $request->has('is_featured') ? 1 : 0;
         $size=$request->input('size');
         if($size){
             $data['size']=implode(',',$size);

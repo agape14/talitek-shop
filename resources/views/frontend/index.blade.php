@@ -40,6 +40,7 @@
     <div class="container-fluid">
         <div class="row">
             @php
+            $settingprimero = DB::table('settings')->first();
             $category_lists=DB::table('categories')->where('status','active')->limit(3)->get();
             @endphp
             @if($category_lists)
@@ -85,83 +86,93 @@
                             <!-- Tab Nav -->
                             <ul class="nav nav-tabs filter-tope-group" id="myTab" role="tablist">
                                 @php
-                                    $categories=DB::table('categories')->where('status','active')->where('is_parent',1)->get();
-                                    // dd($categories);
+                                    $recentlyAddedProducts = DB::table('products')
+                                        ->where('status', 'active')
+                                        ->orderBy('created_at', 'desc')
+                                        ->take(8) // Get the 8 most recently added products
+                                        ->get();
+
+                                    // Obtener los IDs únicos de categorías de los productos recientes
+                                    $categoryIds = $recentlyAddedProducts->pluck('cat_id')->unique()->toArray();
+
+                                    // Obtener las categorías basadas en los IDs únicos
+                                    $categories = DB::table('categories')
+                                        ->whereIn('id', $categoryIds)
+                                        ->where('status', 'active')
+                                        ->where('is_parent', 1)
+                                        ->get();
                                 @endphp
                                 @if($categories)
-                                <button class="btn" style="background:black"data-filter="*">
-                                    Agregado reciente
-                                </button>
-                                    @foreach($categories as $key=>$cat)
-
-                                    <button class="btn" style="background:none;color:black;"data-filter=".{{$cat->id}}">
-                                        {{$cat->title}}
+                                    <button class="btn" style="background:black"data-filter="*">
+                                        Agregado reciente
                                     </button>
+                                    @foreach($categories as $key=>$cat)
+                                        <button class="btn" style="background:none;color:black;"data-filter=".{{$cat->id}}">
+                                            {{$cat->title}}
+                                        </button>
                                     @endforeach
                                 @endif
                             </ul>
                             <!--/ End Tab Nav -->
                         </div>
                         <div class="tab-content isotope-grid" id="myTabContent">
-    @php
-        $recentlyAddedProducts = DB::table('products')
-            ->where('status', 'active')
-            ->orderBy('created_at', 'desc')
-            ->take(8) // Get the 8 most recently added products
-            ->get();
-            $tipos_monedas = DB::table('type_coins')->whereIn('id', [1, 2])->get()->keyBy('id');
-    @endphp
+                            @php
+                                $tipos_monedas = DB::table('type_coins')->whereIn('id', [1, 2])->get()->keyBy('id');
+                            @endphp
 
-    @foreach($recentlyAddedProducts as $key => $product)
-        <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
-            <div class="single-product">
-                <div class="product-img">
-                    <a href="{{route('product-detail', $product->slug)}}">
-                        @php
-                            $photos = explode(',', $product->photo);
-                        @endphp
-                        <img class="default-img" src="{{$photos[0]}}" alt="{{$photos[0]}}">
-                        <img class="hover-img" src="{{$photos[0]}}" alt="{{$photos[0]}}">
-                        @if($product->stock <= 0)
-                            <span class="out-of-stock">Agotado</span>
-                        @elseif($product->condition == 'new')
-                            <span class="new">Nuevo</span>
-                        @elseif($product->condition == 'hot')
-                            <span class="hot">Oferta</span>
-                        @else
-                            @if($product->discount > 0)
-                                <span class="price-dec">{{round($product->discount,0) }}% Dscto</span>
-                            @endif
-                        @endif
-                    </a>
-                    <div class="button-head">
-                        <div class="product-action">
-                            <a data-toggle="modal" data-target="#{{$product->id}}" title="Compra Rápida" href="#"><i class="ti-eye"></i><span>Compra rápida</span></a>
-                            <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
+                            @foreach($recentlyAddedProducts as $key => $product)
+                                <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{$product->cat_id}}">
+                                    <div class="single-product">
+                                        <div class="product-img">
+                                            <a href="{{route('product-detail', $product->slug)}}">
+                                                @php
+                                                    $photos = explode(',', $product->photo);
+                                                @endphp
+                                                <img class="default-img" src="{{$photos[0]}}" alt="{{$photos[0]}}">
+                                                <img class="hover-img" src="{{$photos[0]}}" alt="{{$photos[0]}}">
+                                                @if($product->stock <= 0)
+                                                    <span class="out-of-stock">Agotado</span>
+                                                @elseif($product->condition == 'new')
+                                                    <span class="new">Nuevo</span>
+                                                @elseif($product->condition == 'hot')
+                                                    <span class="hot">Oferta</span>
+                                                @else
+                                                    @if($product->discount > 0)
+                                                        <span class="price-dec">{{round($product->discount,0) }}% Dscto</span>
+                                                    @endif
+                                                @endif
+                                            </a>
+                                            <div class="button-head">
+                                                <div class="product-action">
+                                                    <a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$product->title}}" target="_blank" title="Comprar vía WhatsApp">
+                                                        <i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
+                                                    </a>
+                                                    <a data-toggle="modal" data-target="#{{$product->id}}" title="Compra Rápida" href="#"><i class="ti-eye"></i><span>Compra rápida</span></a>
+                                                    <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
+                                                </div>
+                                                <div class="product-action-2">
+                                                    <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Agregar al carrito</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-content">
+                                            <h3><a href="{{route('product-detail', $product->slug)}}">{{$product->title}}</a></h3>
+                                            <div class="quickview-stock">
+                                                @if($product->stock >0)
+                                                <span><i class="fa fa-check-circle-o text-primary"></i> {{$product->stock}} en stock</span>
+                                                @else
+                                                <span><i class="fa fa-times-circle-o text-danger"></i> {{$product->stock}} sin stock</span>
+                                                @endif
+                                            </div>
+                                            <div class="product-price">
+                                                <span>{{ $tipos_monedas[2]->valor ?? '' }}{{number_format($product->price_dollar, 2)}}</span>
+                                                <span>{{ $tipos_monedas[1]->valor ?? '' }}{{number_format($product->price, 2)}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                        <div class="product-action-2">
-                            <a title="Add to cart" href="{{route('add-to-cart', $product->slug)}}">Agregar al carrito</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-content">
-                    <h3><a href="{{route('product-detail', $product->slug)}}">{{$product->title}}</a></h3>
-                    <div class="quickview-stock">
-                        @if($product->stock >0)
-                        <span><i class="fa fa-check-circle-o text-primary"></i> {{$product->stock}} en stock</span>
-                        @else
-                        <span><i class="fa fa-times-circle-o text-danger"></i> {{$product->stock}} sin stock</span>
-                        @endif
-                    </div>
-                    <div class="product-price">
-                        <span>{{ $tipos_monedas[2]->valor ?? '' }}{{number_format($product->price_dollar, 2)}}</span>
-                        <span>{{ $tipos_monedas[1]->valor ?? '' }}{{number_format($product->price, 2)}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endforeach
-</div>
                     </div>
                 </div>
             </div>
@@ -227,6 +238,9 @@
                                 </a>
                                 <div class="button-head">
                                     <div class="product-action">
+                                        <a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$product->title}}" target="_blank" title="Comprar vía WhatsApp">
+                                            <i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
+                                        </a>
                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Compra Rápida" href="#"><i class="ti-eye"></i><span>Compra rápida</span></a>
                                         <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
                                     </div>
@@ -274,7 +288,6 @@
                 </div>
                 <div class="row">
                     @php
-                        $settingprimero = DB::table('settings')->first();
                         $product_lists=DB::table('products')->where('status','active')->orderBy('id','DESC')->limit(6)->get();
                     @endphp
                     @foreach($product_lists as $product)
@@ -446,7 +459,7 @@
                                                 </div>
                                             </div>
                                         @endif--}}
-                                        <form action="{{route('single-add-to-cart')}}" method="POST" class="mt-4">
+                                        <form action="{{route('single-add-to-cart')}}" method="POST" class="mt-2">
                                             @csrf
                                             <div class="quantity">
                                                 <!-- Input Order -->

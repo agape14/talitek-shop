@@ -199,16 +199,61 @@ class FrontendController extends Controller
                 return redirect()->route('product-lists',$catURL.$brandURL.$priceRangeURL.$showURL.$sortByURL);
             }
     }
-    public function productSearch(Request $request){
-        $recent_products=Product::where('status','active')->orderBy('id','DESC')->limit(3)->get();
-        $products=Product::orwhere('title','like','%'.$request->search.'%')
-                    ->orwhere('slug','like','%'.$request->search.'%')
-                    ->orwhere('description','like','%'.$request->search.'%')
-                    ->orwhere('summary','like','%'.$request->search.'%')
-                    ->orwhere('price','like','%'.$request->search.'%')
-                    ->orderBy('id','DESC')
-                    ->paginate('9');
-        return view('frontend.pages.product-grids')->with('products',$products)->with('recent_products',$recent_products);
+    public function productSearch(Request $request)
+    {
+        // Validación
+        $request->validate([
+            'cat_id' => 'nullable|integer',
+            'search' => 'nullable|string',
+        ]);
+        // Obtener valores antiguos
+        $oldCatId = $request->has('cat_id') ? $request->input('cat_id') : null;
+        $oldSearch = $request->has('search') ? $request->input('search') : null;
+        // Obtener productos recientes
+        $recent_products = Product::where('status', 'active')
+                                ->orderBy('id', 'DESC')
+                                ->limit(3)
+                                ->get();
+
+        // Iniciar consulta de productos
+        $productsQuery = Product::where('status', 'active');
+
+        // Filtrar por categoría si se proporciona una
+        if ($request->has('cat_id') && $request->input('cat_id')) {
+            $productsQuery->where('cat_id', $request->input('cat_id'));
+        }
+
+        // Agregar la búsqueda por término
+        if ($request->has('search') && $request->input('search')) {
+            $searchTerm = $request->input('search');
+            $productsQuery->where(function ($query) use ($searchTerm) {
+                $query->where('title', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('slug', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('description', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('summary', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('price', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Obtener productos paginados
+        $products = $productsQuery->orderBy('id', 'DESC')
+                                ->paginate(9);
+        
+        return view('frontend.pages.product-grids')->with('products', $products)
+        ->with('recent_products', $recent_products);
+    }
+
+    public function filterProducts(Request $request)
+    {
+        $cat_id = $request->input('cat_id');
+
+        $recentlyAddedProducts = Product::where('status', 'active')
+            ->where('cat_id', $cat_id)  // Filtrar por cat_id
+            ->orderBy('created_at', 'desc')
+            ->take(8)
+            ->get();
+
+        return response()->json(['products' => $recentlyAddedProducts]);
     }
 
     public function productBrand(Request $request){

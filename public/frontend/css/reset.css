@@ -286,7 +286,7 @@ big {
 .breadcrumbs {
 	background-color: #F6F7FB;
 	position: relative;
-	padding: 30px 0px;
+	padding: 15px 0px;
 }
 .breadcrumbs .bread-inner {
 	z-index: 22;
@@ -1151,7 +1151,7 @@ object {
 	height: 700px;
 }
 .quickview-content {
-	padding: 40px 40px;
+	padding: 10px 5px;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .quickview-content {
@@ -1245,13 +1245,13 @@ object {
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .quickview-content > h3 {
-    margin: 20px 0 18px;
+    margin: 6px 0 6px;
   }
 }
 
 @media only screen and (max-width: 767px) {
   .quickview-content > h3 {
-    margin: 10px 0 10px;
+    margin: 5px 0 5px;
   }
 }
 

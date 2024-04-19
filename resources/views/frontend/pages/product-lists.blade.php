@@ -198,8 +198,11 @@
 															</a>
 															<div class="button-head">
 																<div class="product-action">
-																	<a data-toggle="modal" data-target="#{{$product->id}}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Compra rápida</span></a>
-																	<a title="Wishlist" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Añadir a la lista de deseos</span></a>
+																	<a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$product->title}}" target="_blank" title="Comprar vía WhatsApp">
+																		<i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
+																	</a>
+																	<a data-toggle="modal" data-target="#{{$product->id}}" title="Compra rápida" href="#"><i class=" ti-eye"></i><span>Compra rápida</span></a>
+																	<a title="Añadir a la lista de deseos" href="{{route('add-to-wishlist',$product->slug)}}" class="wishlist" data-id="{{$product->id}}"><i class=" ti-heart "></i><span>Añadir a la lista de deseos</span></a>
 																</div>
 																<div class="product-action-2">
 																	<a title="Add to cart" href="{{route('add-to-cart',$product->slug)}}">Agregar al carrito</a>

@@ -94,6 +94,13 @@
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>
+        <div class="form-group">
+          <label for="deliveryfree" class="col-form-label">Valor para Delivery gratis<span class="text-danger">*</span></label>
+          <input type="text" class="form-control" name="deliveryfree" required value="{{$data->deliveryfree}}">
+          @error('deliveryfree')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
         <div class="form-group mb-3">
            <button class="btn btn-success" type="submit">Update</button>
         </div>
