@@ -339,7 +339,7 @@
                                         </a>
                                         <div class="button-head">
                                             <div class="product-action">
-												<a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$product->title}}" target="_blank" title="Comprar vía WhatsApp">
+												<a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$data->title}}" target="_blank" title="Comprar vía WhatsApp">
 													<i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
 												</a>
                                                 <a title="Añadir a la lista de deseos" href="#"><i class=" ti-heart "></i><span>Añadir a la lista de deseos</span></a>
