@@ -342,9 +342,8 @@
 												<a href="https://wa.me/51{{$settingprimero->phone}}?text=Estoy%20interesado%20en%20un%20producto: {{$data->title}}" target="_blank" title="Comprar vía WhatsApp">
 													<i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
 												</a>
-                                                <a title="Añadir a la lista de deseos" href="#"><i class=" ti-heart "></i><span>Añadir a la lista de deseos</span></a>
-                                                <a title="Compra rápida" href="#"><i class="ti-bar-chart-alt"></i><span>Compra rápida</span></a>
-                                            </div>
+												<a title="Añadir a la lista de deseos" href="{{route('add-to-wishlist', $data->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
+											</div>
                                             <div class="product-action-2">
                                                 <a title="Add to cart" href="#">Agregar al carrito</a>
                                             </div>
@@ -353,11 +352,8 @@
                                     <div class="product-content">
                                         <h3><a href="{{route('product-detail',$data->slug)}}">{{$data->title}}</a></h3>
                                         <div class="product-price">
-                                            @php 
-                                                $after_discount=($data->price-(($data->discount*$data->price)/100));
-                                            @endphp
-                                            <span class="old">${{number_format($data->price,2)}}</span>
-                                            <span>${{number_format($after_discount,2)}}</span>
+                                            <span>{{ $tipos_monedas[2]->valor ?? '' }}{{number_format($data->price_dollar, 2)}}</span>
+                                    		<span>{{ $tipos_monedas[1]->valor ?? '' }}{{number_format($data->price, 2)}}</span>
                                         </div>
                                       
                                     </div>

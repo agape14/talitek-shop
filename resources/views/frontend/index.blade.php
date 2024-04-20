@@ -242,7 +242,7 @@
                                             <i class="fa fa-whatsapp"></i><span> Comprar vía WhatsApp</span> 
                                         </a>
                                         <a data-toggle="modal" data-target="#{{$product->id}}" title="Compra Rápida" href="#"><i class="ti-eye"></i><span>Compra rápida</span></a>
-                                        <a title="Wishlist" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
+                                        <a title="Añadir a la lista de deseos" href="{{route('add-to-wishlist', $product->slug)}}"><i class="ti-heart"></i><span>Añadir a la lista de deseos</span></a>
                                     </div>
                                     <div class="product-action-2">
                                         <a href="{{route('add-to-cart',$product->slug)}}">Agregar al carrito</a>
