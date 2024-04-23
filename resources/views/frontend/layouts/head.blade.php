@@ -38,8 +38,8 @@
 <link rel="stylesheet" href="{{asset('frontend/css/jquery-ui.css')}}">
 
 <!-- Eshop StyleSheet -->
-<link rel="stylesheet" href="{{asset('frontend/css/reset.css')}}">
-<link rel="stylesheet" href="{{asset('frontend/css/style.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/rosaura.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/css/estilo.css')}}">
 <link rel="stylesheet" href="{{asset('frontend/css/responsive.css')}}">
 <!-- Favicon -->
 <link rel="icon" href="{{asset('frontend/img/talitek-icon.ico')}}" type="image/x-icon">
