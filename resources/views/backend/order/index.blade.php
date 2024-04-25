@@ -9,7 +9,7 @@
          </div>
      </div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary float-left">Order Lists</h6>
+      <h6 class="m-0 font-weight-bold text-primary float-left"> Lista de Ordenes</h6>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -18,14 +18,14 @@
           <thead>
             <tr>
               <th>#</th>
-              <th>Order No.</th>
-              <th>Name</th>
+              <th>No. Orden</th>
+              <th>Nombres</th>
               <th>Email</th>
-              <th>Qty.</th>
-              <th>Charge</th>
+              <th>Cant.</th>
+              <!--<th>Charge</th>-->
               <th>Total</th>
-              <th>Status</th>
-              <th>Action</th>
+              <th>Estado</th>
+              <th>...</th>
             </tr>
           </thead>
           <tbody>
@@ -39,15 +39,15 @@
                     <td>{{$order->first_name}} {{$order->last_name}}</td>
                     <td>{{$order->email}}</td>
                     <td>{{$order->quantity}}</td>
-                    <td>@foreach($shipping_charge as $data) $ {{number_format($data,2)}} @endforeach</td>
-                    <td>${{number_format($order->total_amount,2)}}</td>
+                    {{--<td>@foreach($shipping_charge as $data) $ {{number_format($data,2)}} @endforeach</td>--}}
+                    <td>{{number_format($order->total_amount,2)}}</td>
                     <td>
                         @if($order->status=='new')
-                          <span class="badge badge-primary">NEW</span>
+                          <span class="badge badge-primary">NUEVO</span>
                         @elseif($order->status=='process')
-                          <span class="badge badge-warning">Processing</span>
+                          <span class="badge badge-warning">EnProceso</span>
                         @elseif($order->status=='delivered')
-                          <span class="badge badge-success">Delivered</span>
+                          <span class="badge badge-success">Entregado</span>
                         @else
                           <span class="badge badge-danger">{{$order->status}}</span>
                         @endif
@@ -67,7 +67,7 @@
         </table>
         <span style="float:right">{{$orders->links()}}</span>
         @else
-          <h6 class="text-center">No orders found!!! Please order some products</h6>
+          <h6 class="text-center">¡¡¡No se encontraron pedidos!!! Por favor ordene algunos productos</h6>
         @endif
       </div>
     </div>
@@ -123,8 +123,8 @@
               // alert(dataID);
               e.preventDefault();
               swal({
-                    title: "Are you sure?",
-                    text: "Once deleted, you will not be able to recover this data!",
+                    title: "¿Estas seguro?",
+                    text: "¡Una vez eliminados, no podrás recuperar estos datos!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -133,7 +133,7 @@
                     if (willDelete) {
                        form.submit();
                     } else {
-                        swal("Your data is safe!");
+                        swal("¡Tus datos están seguros!");
                     }
                 });
           })
